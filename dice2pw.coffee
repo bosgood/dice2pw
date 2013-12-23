@@ -17,6 +17,7 @@
 # 66666 zlastword
 
 fs = require 'fs'
+PasswordLookup = require './dicelib'
 
 usage = (msg) ->
   msg = msg or 'convert a set of dice rolls into a diceware password'
@@ -27,6 +28,7 @@ usage = (msg) ->
   """
 
 readDiceRolls = (argv, startIndex) ->
+  debugger
   rolls = []
   for i in [startIndex..argv.length - 1]
     roll = argv[i]
@@ -45,8 +47,11 @@ unless diceRolls?.length > 0
   usage('unable to read dice rolls')
   process.exit(1)
 
-wordlist = fs.readFile dicewareFile, (err, data) ->
+wordlist = fs.readFile dicewareFile, 'utf8', (err, data) ->
   if err?
     usage("unable to load file: #{dicewareFile}")
     process.exit(2)
 
+  db = new PasswordLookup(data.split('\n'))
+  pw = db.getPasswordFromDiceRolls(diceRolls)
+  console.log(pw)
