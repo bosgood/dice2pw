@@ -1,0 +1,24 @@
+{
+  "name": "dice2pw",
+  "version": "1.0.0",
+  "description": "Looks up diceware passwords",
+  "main": "dice2pw.coffee",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/.bin/coffee dice2pw.coffee"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bosgood/dice2pw.git"
+  },
+  "author": "Brad Osgood <bosgood@gmail.com> (https://github.com/bosgood)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bosgood/dice2pw/issues"
+  },
+  "homepage": "https://github.com/bosgood/dice2pw#readme",
+  "dependencies": {
+    "coffee-script": "^1.10.0",
+    "prompt": "^0.2.14"
+  }
+}

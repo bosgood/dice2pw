@@ -17,6 +17,7 @@
 # 66666 zlastword
 
 fs = require 'fs'
+prompt = require 'prompt'
 PasswordLookup = require './dicelib'
 
 usage = (msg) ->
@@ -41,16 +42,21 @@ unless dicewareFile?
   usage('missing diceware file')
   process.exit(1)
 
-diceRolls = readDiceRolls(process.argv, 3)
-unless diceRolls?.length > 0
-  usage('unable to read dice rolls')
+wordlist = fs.readFileSync dicewareFile, 'utf8'
+unless wordlist
+  usage("unable to load file: #{dicewareFile}")
   process.exit(1)
 
-wordlist = fs.readFile dicewareFile, 'utf8', (err, data) ->
-  if err?
-    usage("unable to load file: #{dicewareFile}")
-    process.exit(2)
+db = new PasswordLookup(wordlist.split('\n'))
 
-  db = new PasswordLookup(data.split('\n'))
+# Get the input in a prompt so their password
+# isn't in the shell history
+prompt.start()
+prompt.get ['rolls'], (err, result) ->
+  diceRolls = result.rolls?.split(' ')
+  unless diceRolls?.length > 0
+    usage('unable to read dice rolls')
+    process.exit(1)
+
   pw = db.getPasswordFromDiceRolls(diceRolls)
   console.log(pw)
