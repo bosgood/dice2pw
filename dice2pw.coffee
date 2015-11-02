@@ -28,7 +28,6 @@ usage = (msg) ->
   """
 
 readDiceRolls = (argv, startIndex) ->
-  debugger
   rolls = []
   for i in [startIndex..argv.length - 1]
     roll = argv[i]
